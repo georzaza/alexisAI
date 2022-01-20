@@ -1,3 +1,10 @@
+### What this project is about
+This project is an implementation answering to the following task.
+
+Task: 
+You want to create your own Alexa in your computer. As a first step, your AI will be static, thus it will answer only to predefined questions. You want to test your design locally to your pc thus you will use sockets for the communication between the AI and the client. Design and implement two programs, one for the AI which will listen on a specific port for questions and a client which will connect to this port and then it will wait for input from the user.
+
+
 ### All scripts were written and tested under:
 
 Operating system: Linux, Ubuntu  
@@ -110,3 +117,4 @@ Note: that espeak library is used to manage the Voice Object in task3. I tried u
 
 Run `python3 server.py` and on a new terminal run `python3 client.py`. 
 You can see all available questions by opening the `questions_answers_db` file.
+	
