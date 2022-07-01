@@ -5,6 +5,8 @@ This project is an answer to the following university task:
 
 You want to create your own Alexa in your computer. As a first step, your AI will be static, thus it will answer only to predefined questions. You want to test your design locally to your pc thus you will use sockets for the communication between the AI and the client. Design and implement two programs, one for the AI which will listen on a specific port for questions and a client which will connect to this port and then it will wait for input from the user.
 
+<hr>
+<br>
 
 ### All scripts were written and tested under:
 
@@ -15,14 +17,17 @@ Ubuntu Codename : impish
 Python version  : 3.9.7  
 pip3 version    : 20.3.4
 
+<hr>
 <br>
 
 
-### I wanted to use speech recognition packages. To do that:
+### Speech Recognition and Text to Speech
+Although not required I wanted to make the program in a way that  
+the communication would happen through speech. Below are all the steps  
+that I followed in order to achieve that. 
+
 <br>
 
-### All following pip3 commands will install the packages in the running folder. 
-<br>
 
 
 ### 1. Install `pyttsx3`. Used for text-to-speech conversion.
@@ -30,7 +35,7 @@ pip3 version    : 20.3.4
 pip3 install pyttsx3 --target . --upgrade
 ```
 
-Folders that get created:
+Folders that get created in our work folder:
 - pyttsx3
 - pyttsx3-2.90.dist-info
 
@@ -41,7 +46,7 @@ Folders that get created:
 ```
 pip3 install SpeechRecognition --target . --upgrade
 ```
-Folders that get created:
+Folders that get created in our work folder:
 
 - speech_recognition
 - SpeechRecognition-3.8.1.dist-info
@@ -57,52 +62,51 @@ This `portaudio.h` header is part of portaudio, an open-source cross-platform au
 ```
 sudo apt-get install portaudio19-dev python3-pyaudio
 ```
-You can try the above command. When I developed this however, instead of running the above command, I built `portaudio` from source. The steps to do that were as follows:
+You can try the above command. However, instead of running the above command, I built `portaudio` from source. The steps to do that were as follows:
+ 
+1.  Download portaudio from http://files.portaudio.com/download.html
+    At the time of writing this, the "pa_stable_v190700_20210406.tgz" file was recommended. It is included in this folder. I extracted the tgz file and cd into the `portaudio` folder that was created. Then I run those: 
+    ```
+    tar -zxvf pa_stable_v190700_20210406.tgz
+    cd portaudio
+    ./configure
+    make
+    sudo make install
+    sudo ldconfig
+    ```
 
-a) 
-Download portaudio from http://files.portaudio.com/download.html
-At the time of writing this, the "pa_stable_v190700_20210406.tgz" file was recommended. It is included in this folder. I extracted the tgz file and cd into the `portaudio` folder that was created. Then I run those: 
-```
-tar -zxvf pa_stable_v190700_20210406.tgz
-cd portaudio
-./configure
-make
-sudo make install
-sudo ldconfig
-```
 
+    In case you want to undo that, these are the files that were installed on my system:
+    ```
+    /usr/local/lib/libportaudio.a
+    /usr/local/lib/libportaudio.la
+    /usr/local/lib/libportaudio.so
+    /usr/local/lib/libportaudio.so.2
+    /usr/local/lib/libportaudio.so.2.0.0
+    /usr/local/include/portaudio.h
+    ./lib/x86_64-linux-gnu/libportaudio.so.2.0.0
+    ./lib/x86_64-linux-gnu/libportaudio.so.2
+    ./lib/x86_64-linux-gnu/libportaudiocpp.so.0
+    ./lib/x86_64-linux-gnu/libportaudiocpp.so.0.0.12
+    ./local/lib/pkgconfig/portaudio-2.0.pc
+    ./share/doc/libportaudio2
+    ./share/doc/libportaudiocpp0
+    ```
 
-These are the files that were installed on my system:
-```
-/usr/local/lib/libportaudio.a
-/usr/local/lib/libportaudio.la
-/usr/local/lib/libportaudio.so
-/usr/local/lib/libportaudio.so.2
-/usr/local/lib/libportaudio.so.2.0.0
-/usr/local/include/portaudio.h
-./lib/x86_64-linux-gnu/libportaudio.so.2.0.0
-./lib/x86_64-linux-gnu/libportaudio.so.2
-./lib/x86_64-linux-gnu/libportaudiocpp.so.0
-./lib/x86_64-linux-gnu/libportaudiocpp.so.0.0.12
-./local/lib/pkgconfig/portaudio-2.0.pc
-./share/doc/libportaudio2
-./share/doc/libportaudiocpp0
-```
-
-Then I went ahead and installed pyaudio
-```
-pip3 install --target . --upgrade PyAudio
-```
-Files and folders that got created:
-- portaudio 
-- _portaudio.cpython-39-x86_64-linux-gnu.so
-- pyaudio.py  
-- PyAudio-0.2.11.dist-info
+2.  go ahead and install pyaudio
+    ```
+    pip3 install --target . --upgrade PyAudio
+    ```
+    Files and folders that get created in our work folder:
+    - portaudio 
+    - _portaudio.cpython-39-x86_64-linux-gnu.so
+    - pyaudio.py  
+    - PyAudio-0.2.11.dist-info
 
 <hr><br>
 
 
-### 4. I thought I was done at this moment, but nope. Last step: library espeak
+### 4. espeak library
 After having done all of the above, I tried running a test script to see if everything was working. I could play wav files but not use input from the microphone. More specifically, this was the error when trying to use microphone as input:
 ```
 OSError: libespeak.so.1: cannot open shared object file: No such file or directory
@@ -112,7 +116,12 @@ This happens because pyttsx3 uses the espeak driver by default. To install that 
 ```
 sudo apt install libespeak-dev
 ```
-Note: that espeak library is used to manage the Voice Object in task3. I tried using a different voice (like greek e.g.) but could not do it.
+Note: that espeak library is used to manage a Voice Object. If for example  
+we would like to change to a Greek voice, we would have to tamper with  
+the configuration of this Voice Object.
+
+<hr>
+<br>
 
 ### 5. How to run
 
