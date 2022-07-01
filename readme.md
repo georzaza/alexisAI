@@ -1,9 +1,8 @@
 ## If you follow the instructions below, you will probably only need the `server.py`, `client.py` and `questions_answers_db` files.
 
 ### What this project is about
-This project is an implementation answering to the following task.
+This project is an answer to the following university task:
 
-Task: 
 You want to create your own Alexa in your computer. As a first step, your AI will be static, thus it will answer only to predefined questions. You want to test your design locally to your pc thus you will use sockets for the communication between the AI and the client. Design and implement two programs, one for the AI which will listen on a specific port for questions and a client which will connect to this port and then it will wait for input from the user.
 
 
