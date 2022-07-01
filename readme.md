@@ -1,3 +1,24 @@
+## UPDATE: Sometimes the program does not work correctly when dealing with multiple audio sources.
+The solution to this is probably to set the input and output devices explicitly.   
+This may happen eg. in the client.py file, when the Microphone object is created.   
+Also, the speech_recognition package does not provide what I would call a "correct"   
+validation of the device index used as input (eg it allows other devices to be used),  
+so it would be better if these checks were to happen manually on the client.   
+Sample code to get an idea of this:
+
+```
+# import pyaudio, either directly or through the speech_recognition module.
+p = pyaudio.PyAudio()
+info = p.get_host_api_info_by_index(0)
+numdevices = info.get('deviceCount')
+
+for i in range(0, numdevices):
+    if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+        print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+
+mic = sr.Microphone(device_index=...)
+```
+
 ## If you follow the instructions below, you will probably only need the `server.py`, `client.py` and `questions_answers_db` files.
 
 ### What this project is about
@@ -19,7 +40,6 @@ pip3 version    : 20.3.4
 
 <hr>
 <br>
-
 
 ### Speech Recognition and Text to Speech
 Although not required I wanted to make the program in a way that  

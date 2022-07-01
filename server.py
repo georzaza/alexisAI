@@ -163,7 +163,7 @@ if __name__ == "__main__":
     HOST, PORT = "127.0.0.1", 65000
     print("Sometimes, it might seem that the server takes too long.")
     print("It is probably the client voice recognition that has the problem")
-    print("Read the client's program comment section on how to use text input instead of mic.")
+    print("Read the comment section of client.py on how to use text input instead of mic.")
     print("If you get OSError [Errno 98] you need to wait a bit.\n")
     
     with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
@@ -175,5 +175,5 @@ if __name__ == "__main__":
         # kill the server. Nevertheless, I left this piece of 
         # code here.
         except KeyboardInterrupt as e:
-            print("Byt")
+            print("Bye")
             server.shutdown()

@@ -17,16 +17,16 @@ import speech_recognition as sr
 from speech_recognition import UnknownValueError
 from speech_recognition import RequestError
 
-# To 'speak' the response
+# Used for text-to-speech conversion.
 import pyttsx3
-
 
 # Convert some text to voice and 'speak' it.
 def SpeakText(text):
     engine = pyttsx3.init(debug=True)
     
     # set speed of speeking
-    engine. setProperty("rate", 145)
+    engine.setProperty("rate", 130)
+    engine.setProperty("volume", 0.9)
     engine.say(text)     
     engine.runAndWait()
 
@@ -35,7 +35,7 @@ def SpeakText(text):
 # Default alexis values: 
 # seconds of non-speaking audio before a phrase is considered complete: 0.8
 # minimum seconds of speaking audio before we consider the speaking audio a phrase: 0.3
-alexis = sr.Recognizer() 
+alexis = sr.Recognizer()
 
 # Set server address
 HOST, PORT = "localhost", 65000
@@ -56,6 +56,8 @@ while(1):
             print("Listening...")
             voice_input = alexis.listen(mic) # comment for text input
 
+            print(voice_input)
+
             # recognize the voice_input and convert it to text
             # Either Google or Sphinx are free. Sphinx can work offline.
             # Raises a ``speech_recognition.UnknownValueError`` exception if the speech is unintelligible.
@@ -71,6 +73,7 @@ while(1):
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 # Connect to server
                 sock.connect((HOST, PORT))
+                
                 # send the recognized text
                 data = recognized_text_input
                 sock.sendall(bytes(data + "\n", "utf-8"))
@@ -95,17 +98,3 @@ while(1):
         except UnknownValueError:
             print("Could not recognize what you said.")
 
-# 
-# This segment is a left-over from my testing on whether a
-# greek voice can be used. It seems like neither a greek voice
-# or a female voice can be set.
-# 
-# engine = pyttsx3.init("espeak", debug=True)
-# voices = engine.getProperty('voices')
-# print(voices[10])
-# engine.setProperty("voice", voice[10].id)
-# print(engine.getProperty("voice"))
-# engine.say("hello, how are you?")
-# engine.runAndWait()
-# exit(1)
-# 
